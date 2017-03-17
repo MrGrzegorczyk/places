@@ -30,8 +30,9 @@ public class UserServiceImpl implements UserService {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 
 		authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
+		user.setAuthorities(authorities);
 
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+		return user;
 	}
 
 	@Override

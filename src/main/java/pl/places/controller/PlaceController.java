@@ -5,10 +5,11 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,9 +36,9 @@ public class PlaceController {
 	}
 
 	@RequestMapping(value = "/places/my", method = RequestMethod.GET)
-	public String getMyPlacesPage(Model model) {
+	public String getMyPlacesPage(Model model, @AuthenticationPrincipal User user) {
 
-		List<Place> placeList = placeService.findAll();
+		List<Place> placeList = placeService.findAll(user.getId());
 
 		model.addAttribute("myPlacesList", placeList);
 
@@ -45,9 +46,11 @@ public class PlaceController {
 	}
 
 	@RequestMapping(value = "/place/create", method = RequestMethod.GET)
-	public String getCreatePlaceForm(Model model) {
+	public String getCreatePlaceForm(Model model, @AuthenticationPrincipal User user) {
 
-		model.addAttribute("place", new Place());
+		Place place = new Place();
+		place.setUserId(user.getId());
+		model.addAttribute("place", place);
 
 		return "place-create";
 	}
@@ -64,13 +67,15 @@ public class PlaceController {
 
 	@RequestMapping(value = "/place/save", method = RequestMethod.POST)
 	public String postCreatePlace(@ModelAttribute @Valid Place place, BindingResult result,
-			Authentication authentication) {
+			@AuthenticationPrincipal User user) {
 
 		if (result.hasErrors()) {
+			for (ObjectError error : result.getAllErrors()) {
+				System.out.println(error.toString());
+			}
 			return "place-create";
 		}
-		User principal = (User) authentication.getPrincipal();
-		place.setUserId(principal.getId());
+		place.setUserId(user.getId());
 
 		placeService.save(place);
 

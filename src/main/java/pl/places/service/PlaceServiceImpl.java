@@ -33,4 +33,13 @@ public class PlaceServiceImpl implements PlaceService {
 	public void delete(Long id) {
 		placeDao.delete(id);
 	}
+
+	public List<Place> findLast10Places() {
+		return placeDao.findTop10ByOrderByIdDesc();
+	}
+
+	@Override
+	public List<Place> findAll(Long userId) {
+		return placeDao.findByUserId(userId);
+	}
 }

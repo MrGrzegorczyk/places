@@ -72,8 +72,8 @@
 	    );
 	
 	    <c:forEach items="${lastPlacesList}" var="place">
-			    addPlaceMarker(${place.lon}, ${place.lat}, ${place.name}, ${place.description});
-			</c:forEach>
+			addPlaceMarker(${place.longitude}, ${place.latitude}, "${place.name}", "${place.description}");
+		</c:forEach>
 	});
 </script>
 

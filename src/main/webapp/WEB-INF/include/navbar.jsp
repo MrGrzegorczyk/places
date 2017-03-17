@@ -37,6 +37,9 @@
                 <li>
                     <a href="${myPlacesUrl}"><i class="fa fa-list fa-fw"></i> My places</a>
                 </li>
+                <li>
+                    <a href="${allPlacesUrl}"><i class="fa fa-list fa-fw"></i> All places</a>
+                </li>
             </ul>
         </li>
 

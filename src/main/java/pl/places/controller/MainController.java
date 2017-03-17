@@ -1,15 +1,20 @@
 package pl.places.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import pl.places.config.SecurityConfig;
+import pl.places.model.Place;
 import pl.places.model.User;
 import pl.places.service.EmailService;
+import pl.places.service.PlaceService;
 import pl.places.service.UserService;
 
 @Controller
@@ -21,8 +26,14 @@ public class MainController {
 	@Autowired
 	private EmailService emailService;
 
+	@Autowired
+	private PlaceService placeService;
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String getMainPage() {
+	public String getMainPage(Model model) {
+
+		List<Place> placeList = placeService.findLast10Places();
+		model.addAttribute("lastPlacesList", placeList);
 
 		return "main";
 	}

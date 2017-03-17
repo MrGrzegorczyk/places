@@ -99,7 +99,7 @@
       );
   
       <c:forEach items="${myPlacesList}" var="place">
-          addPlaceMarker(${place.lon}, ${place.lat}, ${place.name}, ${place.description});
+          addPlaceMarker(${place.longitude}, ${place.latitude}, "${place.name}", "${place.description}");
       </c:forEach>
   });
 </script>

@@ -14,4 +14,7 @@ public interface PlaceService {
 
 	void delete(Long id);
 
+	List<Place> findLast10Places();
+
+	List<Place> findAll(Long userId);
 }
