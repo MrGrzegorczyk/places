@@ -38,7 +38,7 @@
                     <form action="${loginURL}" method="post" role="form">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="E-mail" name="email" type="email" required autofocus>
+                                <input class="form-control" placeholder="E-mail" name="email" type="email" required>
                             </div>
                             <div class="form-group">
                                 <input class="form-control" placeholder="Password" name="password" type="password" value="" required>
@@ -60,4 +60,5 @@
     </div>
 </div>
 
+<%@ include file="/WEB-INF/include/scripts.jsp" %>
 <%@ include file="/WEB-INF/include/footer.jsp" %>

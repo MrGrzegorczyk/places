@@ -30,9 +30,3 @@
     
 </head>
 <body>
-<div class="page-wrapper">
-    <header>
-
-    </header>
-    <div class="clearfix"></div>
-    <div class="page-content">

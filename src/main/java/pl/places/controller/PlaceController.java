@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import pl.places.model.Place;
+import pl.places.model.User;
 import pl.places.service.PlaceService;
 
 @Controller
@@ -27,9 +29,19 @@ public class PlaceController {
 
 		List<Place> placeList = placeService.findAll();
 
-		model.addAttribute("placeList", placeList);
+		model.addAttribute("placesList", placeList);
 
 		return "places";
+	}
+
+	@RequestMapping(value = "/places/my", method = RequestMethod.GET)
+	public String getMyPlacesPage(Model model) {
+
+		List<Place> placeList = placeService.findAll();
+
+		model.addAttribute("myPlacesList", placeList);
+
+		return "places-my";
 	}
 
 	@RequestMapping(value = "/place/create", method = RequestMethod.GET)
@@ -51,11 +63,14 @@ public class PlaceController {
 	}
 
 	@RequestMapping(value = "/place/save", method = RequestMethod.POST)
-	public String postCreatePlace(@ModelAttribute @Valid Place place, BindingResult result) {
+	public String postCreatePlace(@ModelAttribute @Valid Place place, BindingResult result,
+			Authentication authentication) {
 
 		if (result.hasErrors()) {
 			return "place-create";
 		}
+		User principal = (User) authentication.getPrincipal();
+		place.setUserId(principal.getId());
 
 		placeService.save(place);
 

@@ -6,7 +6,8 @@
 <c:url value="/logout" var="logoutURL"/>
 <c:url value="/login" var="loginURL"/>
 <c:url value="/register" var="registerURL"/>
-<c:url value="/places" var="myPlacesUrl"/>
+<c:url value="/places" var="allPlacesUrl"/>
+<c:url value="/places/my" var="myPlacesUrl"/>
 <c:url value="/place/create" var="createPlaceUrl"/>
 
 <!-- Navigation -->
@@ -56,7 +57,7 @@
         </li>
         </sec:authorize>
 
-        <c:if test="${not empty principal}">
+        <sec:authorize access="isAuthenticated()">
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <sec:authentication property="principal.username"/> <i class="fa fa-caret-down"></i>
@@ -67,11 +68,11 @@
                 </li>
             </ul>
         </li>
-        </c:if>
-        <c:if test="${empty principal}">
+       </sec:authorize>
+       <sec:authorize access="!isAuthenticated()">
             <li><a href="${loginURL}">Sign In</a></li>
             <li><a href="${registerURL}">Sign Up</a></li>
-        </c:if>
+  	  </sec:authorize>
 
     </ul>
     <!-- /.navbar-top-links -->

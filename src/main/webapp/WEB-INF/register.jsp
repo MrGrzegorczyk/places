@@ -23,7 +23,7 @@
                     <form action="${registerURL}" method="post" role="form">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Login" name="login" type="text" required autofocus>
+                                <input class="form-control" placeholder="Login" name="login" type="text" required>
                             </div>
                             <div class="form-group">
                                 <input class="form-control" placeholder="First name" name="firstName" type="text" required>
@@ -52,4 +52,5 @@
     </div>
 </div>
 
+<%@ include file="/WEB-INF/include/scripts.jsp" %>
 <%@ include file="/WEB-INF/include/footer.jsp" %>
