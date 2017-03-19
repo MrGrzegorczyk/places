@@ -31,42 +31,34 @@ public class MainController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getMainPage(Model model) {
-
 		List<Place> placeList = placeService.findLast10Places();
 		model.addAttribute("lastPlacesList", placeList);
-
 		return "main";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String getLoginPage() {
-
 		return "login";
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String getRegisterPage() {
-
 		return "register";
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(@ModelAttribute User user) {
-
 		try {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(SecurityConfig.PASSWORD_STRENGHT);
 			String encodedPassword = encoder.encode(user.getPassword());
 			user.setPassword(encodedPassword);
 			userService.save(user);
-
 		} catch (Exception e) {
-
 			return "redirect:/register";
 		}
 
 		emailService.sendEmail("noreply@places.pl", user.getEmail(), getRegisterEmailSubject(user),
 				getRegisterEmailBody(user));
-
 		return "redirect:/login";
 	}
 
